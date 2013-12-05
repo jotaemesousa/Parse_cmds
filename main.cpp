@@ -5,6 +5,7 @@
  *      Author: joao
  */
 
+// http://brnx.no-ip.com/snippets/1
 
 #include <stdio.h>
 #include <stdlib.h>
