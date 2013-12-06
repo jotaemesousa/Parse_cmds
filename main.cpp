@@ -43,6 +43,8 @@ int main(int argc, char **argv)
 	{
 		while(scanf("%c%*c", &input))
 		{
+			static int index_n_arg = 0;
+
 			printf("echo |%c|\n", input);
 
 			switch (currentState)
@@ -61,6 +63,7 @@ int main(int argc, char **argv)
 				{
 					cmd = (Command_Typedef)input;
 					currentState = N_ARG_State;
+					index_n_arg = 0;
 				}
 				else
 				{
@@ -70,21 +73,30 @@ int main(int argc, char **argv)
 
 			case N_ARG_State:
 
-				arg_temp[0] = input;
-				arg_temp[1] = 0;
-				n_arg = atoi((const char*)arg_temp);
-
-				if(n_arg >= 0 && n_arg < 127)
+				if(index_n_arg < 1)
 				{
-					currentState = Parse_State;
-					index_parse = 0;
-					var_index = 0;
+					arg_temp[index_n_arg] = input;
+					index_n_arg++;
 				}
 				else
 				{
-					currentState = IDLE_State;
-				}
+					arg_temp[index_n_arg] = input;
+					arg_temp[2] = 0;
 
+
+					n_arg = atoi((const char*)arg_temp);
+
+					if(n_arg >= 0 && n_arg < 127)
+					{
+						currentState = Parse_State;
+						index_parse = 0;
+						var_index = 0;
+					}
+					else
+					{
+						currentState = IDLE_State;
+					}
+				}
 				break;
 
 			case Parse_State:
