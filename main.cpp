@@ -145,7 +145,6 @@ int main(int argc, char **argv)
 					currentState = IDLE_State;
 					break;
 			}
-
 		}
 	}
 
